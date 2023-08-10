@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=4.2
+Encoding=UTF-8
+Name=Roxy Pos
+Terminal=false
+Exec=unicentaopos
+Icon=unicentaopos
+Type=Application
+InitialPreference=6
+Categories=Application;Office;
+StartupNotify=false
+GenericName=Roxy Pos
+Comment=Roxy Pos Touch Friendly Point Of Sale
+Name[en_US]=Roxy Pos
+GenericName[en_US]=Roxy Pos

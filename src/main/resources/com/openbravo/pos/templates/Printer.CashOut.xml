@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    uniCenta oPOS - Touch friendly Point Of Sale
+    Copyright © 2009-2020 uniCenta.
+    http://sourceforge.net/projects/unicentaopos
+
+    This file is part of uniCenta oPOS.
+
+    uniCenta oPOS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    uniCenta oPOS is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<output>
+    <ticket>
+        <line></line>
+        #if (${ticket.printTicketHeaderLine1()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine1()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine2()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine2()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine3()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine3()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine4()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine4()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine5()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine5()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine6()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine6()}</text></line>
+        #end
+        <line><text align="center" length="42">--- CASH OUT REPORT ---</text></line>
+
+        <line></line>
+        <line><text align="left" length="15">Date:</text><text>${ticket.printDate()}</text></line>
+        <line><text align="left" length="15">Terminal: </text><text>${ticket.getHost()}</text></line> 
+        <line><text align="left" length="15">Run by:</text><text>${ticket.printUser()}</text></line> 
+        <line></line>
+        
+        <line><text align="center" length="42">SALES</text></line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line><text align="left" length="20">Total Orders: </text><text align="right" length="7">${totalOrders}</text><text align="right" length="15">${totalOrdersAmount}</text></line>
+        <line><text align="left" length="30">Total Comps: </text><text align="right" length="12">${totalComps}</text></line>
+        <line><text align="left" length="30">Total Discounts: </text><text align="right" length="12">${totalDiscounts}</text></line>
+        <line><text align="left" length="30">Gross Sales: </text><text align="right" length="12">${grossSales}</text></line>
+        <line><text align="left" length="30">Tax: </text><text align="right" length="12">${totalTax}</text></line>
+        <line><text align="left" length="30">Net Sales </text><text align="right" length="12">${totalNet}</text></line>
+        <line><text align="center" length="42">==========================================</text></line>
+        <line></line>
+        
+        <line><text align="center" length="42">NET GROUP SALES</text></line>
+        <line><text align="center" length="42">AFTER COMPS AND DISCOUNTS</text></line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line>
+            <text align ="left" length="21">GROUP</text>
+            <text align ="right" length="21">TOTAL</text>
+        </line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        #foreach ($line in $categorySummary)
+        <line>
+            <text align ="left" length="21">${line[0]}</text>
+            <text align ="right" length="21">${line[1]}</text>
+        </line>
+        #end
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line>
+            <text align ="right" length="42">${totalCategorySummary}</text>
+        </line>
+        <line><text align="center" length="42">==========================================</text></line>
+        <line></line>
+        
+        <line><text align="center" length="42">NON CASH</text></line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line><text align="left" length="30">Sub Total: </text><text align="right" length="12">${subTotal}</text></line>
+        <line><text align="left" length="30">Gratuity: </text><text align="right" length="12">0.00</text></line>
+        <line><text align="left" length="30">Tip: </text><text align="right" length="12">${tip}</text></line>
+        <line><text align="left" length="30">Gratuity+Tip: </text><text align="right" length="12">${totalGratutiyTip}</text></line>
+        <line><text align="left" length="30">Total: </text><text align="right" length="12">${totalTaxNonCash}</text></line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line><text align="left" length="42">Total</text></line>
+        <line><text align="left" length="30">Gratuity+Tip: </text><text align="right" length="12">${totalGratutiyTip}</text></line>
+        <line><text align="left" length="30">CC Disc. (3.00%): </text><text align="right" length="12">${totalGratutiyTip3}</text></line>
+        <line><text align="left" length="42">Net</text></line>
+        <line><text align="left" length="30">Gratuity+Tip: </text><text align="right" length="12">${netGratutiyTip}</text></line>
+        <line><text align="center" length="42">==========================================</text></line>
+        <line></line>
+        
+        <line><text align="center" length="42">DUES</text></line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line><text align="left" length="30">Net Cash Due: </text><text align="right" length="12">0.00</text></line>
+        <line><text align="left" length="30">Due to EMPLOYEE: </text><text align="right" length="12">0.00</text></line>
+        <line></line>
+        
+        <line><text align="center" length="42">----- END OF REPORT -----</text></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+    </ticket>
+</output>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    uniCenta oPOS - Touch friendly Point Of Sale
+    Copyright © 2009-2020 uniCenta.
+    http://sourceforge.net/projects/unicentaopos
+
+    This file is part of uniCenta oPOS.
+
+    uniCenta oPOS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    uniCenta oPOS is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<output>
+    <ticket>
+        <line></line>
+        #if (${ticket.printTicketHeaderLine1()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine1()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine2()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine2()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine3()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine3()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine4()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine4()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine5()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine5()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine6()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine6()}</text></line>
+        #end
+        <line><text align="center" length="42">--- CLOSE STORE REPORT ---</text></line>
+
+        <line></line>
+        <line><text align="right" length="12">From: </text><text>${openDate}</text></line>
+        <line><text align="right" length="12">To: </text><text>${closeDate}</text></line> 
+        <line><text align="center" length="42">**** STORE IS CLOSED ****</text></line>
+        <line></line>
+        
+        <line><text align="center" length="42">PAYMENTS SUMMARY</text></line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line>
+            <text align ="left" length="20">Payment Type</text>
+            <text align ="right" length="8">Total</text>
+            <text align ="right" length="14">Quantity+Tip</text>
+        </line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        #foreach ($line in $paymentSummary)
+        <line>
+            #if ($line[0] == "cash")
+                <text align="left" length="20" bold="true">Cash</text>
+            #end
+            #if ($line[0] == "AMEX")
+                <text align="left" length="20" bold="true">Credit: Amex</text>
+            #end
+            #if ($line[0] == "MASTER")
+                <text align="left" length="20" bold="true">Credit: Master</text>
+            #end
+            #if ($line[0] == "VISA")
+                <text align="left" length="20" bold="true">Credit: Visa</text>
+            #end
+            #if ($line[0] == "DISC")
+                <text align="left" length="20" bold="true">Credit: Discover</text>
+            #end
+            #if ($line[0] == "DINE")
+                <text align="left" length="20" bold="true">Credit: Dine</text>
+            #end
+            #if ($line[0] == "JCB")
+                <text align="left" length="20" bold="true">Credit: Jcb</text>=
+            #end
+            <text align ="right" length="8">${line[1]}</text>
+            <text align ="right" length="14">${line[2]}</text>
+        </line>
+        #end
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line>
+            <text align ="right" length="28">${totalPayment}</text>
+            <text align ="right" length="14">${totalTip}</text>
+        </line>
+        <line><text align="center" length="42">==========================================</text></line>
+        <line></line>
+        
+        <line><text align="center" length="42">SALES</text></line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line><text align="left" length="30">Gross Sales: </text><text align="right" length="12">${totalPayment}</text></line>
+        <line><text align="left" length="30">Taxes: </text><text align="right" length="12">${totalTax}</text></line>
+        <line><text align="left" length="30">Net Sales: </text><text align="right" length="12">${totalNet}</text></line>
+        <line><text align="center" length="42">==========================================</text></line>
+        <line></line>
+        
+        <line><text align="center" length="42">STATISTICS</text></line>
+        <line><text align="center" length="42">------------------------------------------</text></line>
+        <line><text align="left" length="30">Orders: </text><text align="right" length="12">${orderCount}</text></line>
+        <line><text align="left" length="30">Avg/Order (Net): </text><text align="right" length="12">${avgOrderNet}</text></line>
+        <line><text align="left" length="30">Avg/Order (Gross): </text><text align="right" length="12">${avgOrderTax}</text></line>
+        <line></line>
+        
+        <line><text align="center" length="42">----- END OF REPORT -----</text></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+    </ticket>
+</output>

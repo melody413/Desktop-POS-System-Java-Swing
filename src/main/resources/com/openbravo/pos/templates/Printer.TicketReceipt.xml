@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<output>
+    <ticket>
+        <line></line>
+        #if (${ticket.printTicketHeaderLine1()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine1()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine2()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine2()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine3()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine3()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine4()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine4()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine5()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine5()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine6()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine6()}</text></line>
+        #end
+
+        <line></line>  
+        #if (${void} == "1")
+        <line><text align="center" length="42">---------- VOID ----------</text></line>
+        #end
+        #if (${ticket.ticketType} == 0)
+            <line><text align="left" length="15">Receipt:</text><text>${ticket.printId()}</text></line>
+        #end
+        #if (${ticket.ticketType} == 1)
+            <line><text align="left" length="15">Refund:</text><text>${ticket.printId()}</text></line>
+        #end
+	
+        <line><text align="left" length="15">Date:</text><text>${ticket.printDate()}</text></line>
+        <line><text align="left" length="15">Terminal: </text><text>${ticket.getHost()}</text></line> 
+        <line><text align="left" length="15">Served by:</text><text>${ticket.printUser()}</text></line>
+
+        #if ($ticket.getCustomer())
+            <line><text align="left" length="15">Account #:</text><text>${ticket.getCustomer().printTaxCustomerID()}</text></line>
+            <line><text align="left" length="15">Customer:</text><text>${ticket.getCustomer().printName()}</text></line>
+                #if ($ticket.getCustomer().printAddress())
+                <line><text align="left" length="15">Address:</text><text>${ticket.getCustomer().printAddress()}</text></line>
+                #end
+                #if ($ticket.getCustomer().printPostal())
+                <line><text align="left" length="15">Postal:</text><text>${ticket.getCustomer().printPostal()}</text></line>
+                #end
+                #if ($ticket.getCustomer().printPhone1())
+                <line><text align="left" length="15">Phone:</text><text>${ticket.getCustomer().printPhone1()}</text></line>
+                #end
+                #if ($ticket.getCustomer().printCurDebt())
+                <line><text align="left" length="15">Current Debt:</text><text>${ticket.getCustomer().printCurDebt()}</text></line>
+                #end
+                #if ($ticket.getCustomer().printCurBal())
+                <line><text align="left" length="15">Balance:</text><text>${ticket.getCustomer().printCurBal()}</text></line>
+                #end
+                #if ($ticket.getCustomer().getTaxid())
+                <line><text align="left" length="15">TaxId:</text><text>${ticket.getCustomer().getTaxid()}</text></line>
+                #end
+        #end     
+
+        <!--#if (${tickettext.place} != ${place})-->
+            <line><text align="left" length="15">Table:</text><text>${place}</text></line>
+	<!--#end-->
+	<line></line>
+        <line>
+            <text align ="left" length="17">Item</text>
+            <text align ="right" length="8">Price</text>
+            <text align ="right" length="7">Qty</text>
+            <text align ="right" length="10">Value</text>
+        </line>
+        <line><text align="left" length="42">------------------------------------------</text></line>
+    
+        #foreach ($ticketline in $ticket.getLines())
+        <line>
+            #if ($ticketline.isProductCom())
+                <text align ="left" length="17">*${ticketline.printName()}</text>
+            #else
+                <text align ="left" length="17">${ticketline.printName()}</text>
+            #end
+
+<!-- Print line to show Prices inc. Tax -->
+            <text align ="right" length="8">${ticketline.printPriceTaxEx()}</text>
+            <text align ="right" length="7">x${ticketline.printMultiply()}</text>
+            <text align ="right" length="10">${ticketline.printValueEx()}</text>
+         </line>
+        
+            
+            #if ($ticketline.productAttSetInstId)
+                <line><text align ="left" length="42">${ticketline.productAttSetInstDesc}</text></line>
+            #end
+        #end
+
+        <line><text align="left" length="42">------------------------------------------</text></line>
+        <line><text>Items count: </text><text align ="left" length="14">${ticket.printArticlesCount()}</text></line>
+        <line></line>
+        <line>
+            <text align ="left" bold="true" length="16">Subtotal</text>
+            <text align ="right" length="26">${ticket.printSubTotal()}</text>
+        </line>
+        <line>
+            <text align ="left" length="16" bold="true" >Tax</text>
+            <text align ="right" length="26">${ticket.printTax()}</text>
+        </line>
+        <line>
+            <text align ="left" length="16" bold="true" >Total</text>
+            <text align ="right" length="26">${ticket.printTotal()}</text>
+        </line>
+        <line><text align="left" length="42">------------------------------------------</text></line>
+        <line></line>
+        #if ($payment.name == "cash" || ${cardType} == "CASH")
+            #if (${cardType} != "CASH")
+            <line><text bold="true">Cash</text></line>
+            <line><text align="left" length="22">Tendered:</text><text align ="right" length="20">${payment.printPaid()}</text></line>
+            <line></line>
+            <line size="1">
+                <text align ="left" length="16" bold="true">Balance Due</text>
+                <text align ="right" length="26" bold="true">${payment.printChange()}</text>
+            </line>
+            #else
+            <line><text bold="true">Cash</text></line>
+            <line><text align="left" length="22">Tendered:</text><text align ="right" length="20">${ticket.printTotal()}</text></line>
+            <line></line>
+            <line size="1">
+                <text align ="left" length="16" bold="true">Balance Due</text>
+                <text align ="right" length="26" bold="true">$0.00</text>
+            </line>
+            #end
+        #else
+            #if (${void} == "0")
+            <line><text align="left" length="22" bold="true">Number: </text><text align ="right" length="20">${payment.printCardNumber()}</text></line>
+            <line><text align="left" length="22" bold="true">Payment Type: </text><text align ="right" length="20">${payment.getCardName()}</text></line>
+            #end
+            #if (${void} == "1")
+            <line><text align="left" length="22" bold="true">Number: </text><text align ="right" length="20">${cardNumber}</text></line>
+            <line><text align="left" length="22" bold="true">Payment Type: </text><text align ="right" length="20">${cardType}</text></line>
+            #end
+            
+            <line></line>
+            #if (${void} == "0")
+            <line><text align ="left" length="16" bold="true">Tip:</text><text align ="right" length="26" size="1">_______________</text></line>
+            #end
+            #if (${void} == "1")
+            <line><text align ="left" length="16" bold="true">Tip:</text><text align ="right" length="26" size="1">${closedTip}</text></line>
+            #end
+            <line></line>
+            #if (${void} == "0")
+            <line><text align ="left" length="16" bold="true">Total</text><text align ="right" length="26" size="1">_______________</text></line>
+            #end
+            #if (${void} == "1")
+            <line><text align ="left" length="16" bold="true">Total</text><text align ="right" length="26" size="1">${closedTotal}</text></line>
+            #end
+            <line></line>
+            <line></line>
+            <line><text align ="left" length="42" bold="false">__________________________________________</text></line>
+            <line><text align ="center" length="42" bold="true">Signature</text></line>
+            <line></line>
+        #end   
+        
+        <line><text align="center" length="42">Tip Guide</text></line>
+        <line><text align="center" length="42">${ticket.printTipGuide()}</text></line>
+
+        #if (${ticket.printTicketFooterLine1()} != "")
+            <line></line>
+            <line><text align="center" length="42">${ticket.printTicketFooterLine1()}</text></line>  
+            <line><text>==========================================</text></line>
+        #end
+        #if (${ticket.printTicketFooterLine2()} != "")
+            <line><text align="center" length="42">${ticket.printTicketFooterLine2()}</text></line>
+        #end
+        #if (${ticket.printTicketFooterLine3()} != "")
+            <line><text align="center" length="42">${ticket.printTicketFooterLine3()}</text></line>
+        #end
+        #if (${ticket.printTicketFooterLine4()} != "")
+            <line><text align="center" length="42">${ticket.printTicketFooterLine4()}</text></line>
+        #end
+        #if (${ticket.printTicketFooterLine5()} != "")
+            <line><text align="center" length="42">${ticket.printTicketFooterLine5()}</text></line>
+        #end
+        #if (${ticket.printTicketFooterLine6()} != "")
+            <line><text align="center" length="42">${ticket.printTicketFooterLine6()}</text></line>
+        #end
+        
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+    </ticket>
+
+</output>

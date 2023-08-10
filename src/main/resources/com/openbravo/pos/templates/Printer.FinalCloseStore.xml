@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    uniCenta oPOS - Touch friendly Point Of Sale
+    Copyright © 2009-2020 uniCenta.
+    http://sourceforge.net/projects/unicentaopos
+
+    This file is part of uniCenta oPOS.
+
+    uniCenta oPOS is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    uniCenta oPOS is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+
+<output>
+    <ticket>
+        <line></line>
+        #if (${ticket.printTicketHeaderLine1()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine1()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine2()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine2()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine3()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine3()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine4()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine4()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine5()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine5()}</text></line>
+        #end
+        #if (${ticket.printTicketHeaderLine6()} != "")
+            <line><text align="center" length="42">${ticket.printTicketHeaderLine6()}</text></line>
+        #end
+        <line><text align="center" length="42">--- CLOSE STORE REPORT ---</text></line>
+
+        <line></line>
+        <line><text align="right" length="12">From: </text><text>${openDate}</text></line>
+        <line><text align="right" length="12">To: </text><text>${closeDate}</text></line> 
+        <line><text align="center" length="42">**** STORE IS CLOSED ****</text></line>
+        <line></line>
+        
+        <line><text align="left" length="30">Payments in Cash Drawer: </text><text align="right" length="12">${cashDrawer}</text></line>
+        <line><text align="left" length="30">Petty Cash: </text><text align="right" length="12">0.00</text></line>
+        <line></line>
+        
+        <line><text align="left" length="30">Cash Activity/Deposit: </text><text align="right" length="12">${cashActivity}</text></line>
+        <line><text align="left" length="30">Overage/Shortage: </text><text align="right" length="12">${shortage}</text></line>
+        <line></line>
+        
+        <line><text align="left" length="30">Cash Deposit: </text><text align="right" length="12">${cashDeposit}</text></line>
+        <line></line>
+        
+        <line><text align="left" length="30">Credit Card Sales: </text><text align="right" length="12">${ccSales}</text></line>
+        <line><text align="left" length="30">Credit Card Gratuity: </text><text align="right" length="12">${ccGratuity}</text></line>
+        <line><text align="left" length="30">Credit Card Tips: </text><text align="right" length="12">${ccTips}</text></line>
+        <line><text align="left" length="30">Credit Card Gratuity + Tips: </text><text align="right" length="12">${ccGT}</text></line>
+        <line></line>
+        
+        <line><text align="left" length="30">Total Credit Card Deposit: </text><text align="right" length="12">${ccTotal}</text></line>
+        <line></line>
+        
+        <line><text align="center" length="42">----- END OF REPORT -----</text></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line></line>
+    </ticket>
+</output>
